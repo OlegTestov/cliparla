@@ -22,7 +22,7 @@ describe('tray: Send feedback', () => {
   })
 
   it('points at the GitHub issue chooser', () => {
-    assert.equal(FEEDBACK_URL, 'https://github.com/verdictworks/cliparla/issues/new/choose')
+    assert.equal(FEEDBACK_URL, 'https://github.com/OlegTestov/cliparla/issues/new/choose')
   })
 
   it('a click opens that URL once in the browser', () => {

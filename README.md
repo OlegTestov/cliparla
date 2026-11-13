@@ -8,7 +8,7 @@ Drag a box over text you can't read and see the translation. Then speak in your 
 
 ![Click a text field in Slack, press the shortcut and speak; the translated text appears in the message box](docs/demo-dictation.gif)
 
-**[Download for Mac](https://github.com/verdictworks/cliparla/releases/latest)** · free and open source · no Cliparla account · no subscription
+**[Download for Mac](https://github.com/OlegTestov/cliparla/releases/latest)** · free and open source · no Cliparla account · no subscription
 
 ## Why people use it
 
@@ -38,7 +38,7 @@ Checked in their public docs on 3 November 2026. Tell us if something has change
 
 ## Get started
 
-1. **Install.** [Download the DMG](https://github.com/verdictworks/cliparla/releases/latest) and drag Cliparla to Applications. It is signed and notarized by Apple, so macOS only asks you to confirm the first time you open it.
+1. **Install.** [Download the DMG](https://github.com/OlegTestov/cliparla/releases/latest) and drag Cliparla to Applications. It is signed and notarized by Apple, so macOS only asks you to confirm the first time you open it.
 2. **Paste your key.** Cliparla asks for one thing: a Gemini API key. [Get a free key from Google AI Studio](https://aistudio.google.com/app/apikey), paste it and press **Test key**.
 3. **Try it.** Press `Ctrl + Option + S` and drag over some text, or hold `Ctrl + Option + V` and speak. S for screen, V for voice. Hotkeys and languages can be changed in Settings.
 
@@ -93,7 +93,7 @@ All AI calls go through one interface, `TranslationService` (`src/main/services/
 
 ## Feedback
 
-Something broke, or you want a feature? Choose **Send feedback** in the menu bar, or [open an issue](https://github.com/verdictworks/cliparla/issues/new/choose). I read all of them.
+Something broke, or you want a feature? Choose **Send feedback** in the menu bar, or [open an issue](https://github.com/OlegTestov/cliparla/issues/new/choose). I read all of them.
 
 ## License
 
