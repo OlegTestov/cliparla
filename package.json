@@ -1,0 +1,137 @@
+{
+  "name": "cliparla",
+  "version": "0.2.0",
+  "description": "Cliparla - translate any text on your screen or your voice with your own Gemini API key",
+  "main": "./out/main/index.js",
+  "author": "Oleg Testov",
+  "license": "MIT",
+  "scripts": {
+    "predev": "bash tools/build-paste-helper.sh || echo 'paste helper not built: dictation will copy instead of paste'",
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "build:native": "bash tools/build-paste-helper.sh",
+    "preview": "electron-vite preview",
+    "package": "npm run build:native && npm run build && electron-builder --mac --dir -c.mac.identity=-",
+    "package:signed": "npm run build:native && npm run build && electron-builder --mac --dir -c.mac.identity=\"$CSC_NAME\"",
+    "build:mac": "npm run build:native && npm run build && electron-builder --mac -c.mac.identity=-",
+    "build:win": "npm run build && electron-builder --win --x64",
+    "build:linux": "npm run build && electron-builder --linux",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tests.json",
+    "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\" \"tests/**/*.ts\" \"tools/**/*.mjs\"",
+    "check": "npm run typecheck && npm run lint && npm run format:check",
+    "leak-gate": "node tools/leak-gate.mjs",
+    "leak-gate:staged": "node tools/leak-gate.mjs --staged",
+    "leak-gate:publish": "node tools/leak-gate.mjs --require-local",
+    "test": "npm run leak-gate && tsx --test tests/*.test.ts",
+    "test:live": "tsx --test tests/live/*.test.ts",
+    "package:review": "npm run build:native && npm run build && electron-builder --mac --dir -c.mac.identity=- -c.electronFuses.enableNodeCliInspectArguments=true -c.electronFuses.enableEmbeddedAsarIntegrityValidation=false",
+    "notices": "node tools/gen-notices.mjs",
+    "release": "bash tools/release.sh"
+  },
+  "dependencies": {
+    "@google/genai": "2.30.0",
+    "electron-store": "^10.1.0",
+    "i18next": "^25.8.4",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-i18next": "^16.5.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^20.19.30",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.4.23",
+    "electron": "^45.1.0",
+    "electron-builder": "^26.4.0",
+    "electron-vite": "^5.0.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "fast-check": "^4.5.3",
+    "postcss": "^8.5.6",
+    "prettier": "^3.8.1",
+    "tailwindcss": "^3.4.19",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.1",
+    "vite": "^7.3.1"
+  },
+  "build": {
+    "appId": "dev.cliparla.app",
+    "productName": "Cliparla",
+    "electronLanguages": [
+      "en"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "files": [
+      "out/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "resources",
+        "to": "resources",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "resources/icon.png",
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "extraResources": [
+        {
+          "from": "native/build",
+          "to": "bin"
+        }
+      ],
+      "binaries": [
+        "Contents/Resources/bin/cliparla-paste",
+        "Contents/Resources/bin/cliparla-keys"
+      ],
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "identity": null,
+      "extendInfo": {
+        "LSUIElement": true,
+        "NSMicrophoneUsageDescription": "Cliparla needs microphone access for voice dictation and translation."
+      }
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "resources/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "resources/icon.png"
+    },
+    "electronFuses": {
+      "runAsNode": false,
+      "enableCookieEncryption": false,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true,
+      "resetAdHocDarwinSignature": true
+    }
+  },
+  "private": true
+}
